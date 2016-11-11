@@ -1,0 +1,91 @@
+<header id="header" data-current-skin={{mactrl.currentSkin}} data-ng-include="'template/header.html'" data-ng-controller="headerCtrl as hctrl"></header>
+
+<section id="main">
+    <aside id="sidebar" data-ng-include="'template/sidebar-left.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+
+    <!-- <aside id="chat" data-ng-include="'template/chat.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside> -->
+
+    <section id="content">
+
+        <div class="container text-center">
+            <h1>Bulls & Cows</h1>
+            <p class="lead">The game about words and tears linguists ;-)</p>
+
+            <div class="card m-t-30  p-t-15 p-b-30">
+                <div class="card-header">
+                    <h3 class="m-t-0">Choose difficulty</h3>
+                    <p class="max-w-500 m-auto">Donec ultricies, lacus id tempor condimentum, orci leo faucibus sem, a molestie libero lectus ac justo. ultricies mi eros, sit amet tempor nulla varius sed. Proin nisl nisi, feugiat quis bibendum vitae, dapibus in tellus.</p>
+                </div>
+
+
+                <div class="card-body card-padding p-t-0">
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="inlineRadioOptionsA" value="option1">
+                        <i class="input-helper"></i>
+                        The usual Tuesday
+                    </label>
+
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="inlineRadioOptionsA" value="option2">
+                        <i class="input-helper"></i>
+                        Prepare dictionary
+                    </label>
+
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="inlineRadioOptionsA" value="option3">
+                        <i class="input-helper"></i>
+                        Welcome to Hell
+                    </label>
+                </div>
+
+                <div class="card-header">
+                    <h3 class="m-t-0">Choose word length</h3>
+                </div>
+
+                <div class="card-body card-padding">
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="inlineRadioOptions" value="option1">
+                        <i class="input-helper"></i>
+                        4
+                    </label>
+
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="inlineRadioOptions" value="option2">
+                        <i class="input-helper"></i>
+                        5
+                    </label>
+
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="inlineRadioOptions" value="option3">
+                        <i class="input-helper"></i>
+                        6
+                    </label>
+
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="inlineRadioOptions" value="option3">
+                        <i class="input-helper"></i>
+                        7
+                    </label>
+
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="inlineRadioOptions" value="option3">
+                        <i class="input-helper"></i>
+                        8
+                    </label>
+
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="inlineRadioOptions" value="option3">
+                        <i class="input-helper"></i>
+                        9
+                    </label>
+                </div>
+            </div>
+
+
+            <button class="btn bgm-orange btn-lg m-t-30">Start game</button>
+        </div>
+
+    </section>
+</section>
+
+<footer id="footer" data-ng-include="'template/footer.html'"></footer>
