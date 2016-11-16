@@ -1,0 +1,9 @@
+version: '2'
+services:
+  nginx:
+    build: .
+    volumes:
+      - .:/usr/share/nginx/html
+    ports:
+      - "5001:80"
+    working_dir: /usr/share/nginx/html
