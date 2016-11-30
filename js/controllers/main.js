@@ -3,19 +3,14 @@ bullsCows
     // Base controller for common functions
     // =========================================================================
 
-    .controller('bullscowsCtrl', function($timeout, $state, $scope, getgamedialogService, growlService){
+    .controller('bullscowsCtrl', function($timeout, $state, $scope, $location, getgamedialogService, growlService, $http){
         //Welcome Message
         // growlService.growl('Welcome back Mallinda!', 'inverse')
-        
         
         // Detact Mobile Browser
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
            angular.element('html').addClass('ismobile');
         }
-
-        // this.olala = recentitemService.getRecentitem();
-
-        // console.log(this.olala);
 
         // By default Sidbars are hidden in boxed layout and in wide layout only the right sidebar is hidden.
         this.sidebarToggle = {
@@ -58,33 +53,117 @@ bullsCows
         this.skinSwitch = function (color) {
             this.currentSkin = color;
         }
-    
+
+    })
+
+    .controller('creategameCtrl', function($scope, $location, Game)
+    {
+        $scope.secretWord = '';
+
+        this.createGame = function () {
+            var secret = $scope.secretWord;
+            if (secret.length > 3)
+            {
+                var game = new Game(secret);
+                game.create().then(function() {
+                    if (game.answer.data.game.link)
+                    {
+                        $location.path(game.answer.data.game.link);
+                    }
+                });
+            }
+        }
     })
 
 
-    .controller('gamedialogCtrl', function($scope, getgamedialogService){
+    .controller('gamedialogCtrl', function(
+                                            $scope,
+                                            Guess,
+                                            Game,
+                                            Hint,
+                                            $location,
+                                            getgamedialogService,
+                                            getGuessesbyidService,
+                                            getBestGuessesbyidService,
+                                            getZeroGuessesbyidService,
+                                            getGameStatusbyidService,
+                                            postGuesstoidService
+                                        )
+        {
         //Get Recent Game Dialog
         $scope.textMessage = '';
 
-        $scope.type = getgamedialogService.type;
-        $scope.text = getgamedialogService.text;
-        
-        $scope.gdResult = getgamedialogService.getDialog($scope.type, $scope.text);
+        $scope.gdResultGuesses      = getGuessesbyidService.getGuesses( { gameid: $scope.gameid } );
+        $scope.gdResultGameStatus   = getGameStatusbyidService.getGame( { gameid: $scope.gameid } );
+        $scope.gdResultBestGuesses  = getBestGuessesbyidService.getGuesses( { gameid: $scope.gameid, limit: 5 } );
+        $scope.gdResultZeroGuesses  = getZeroGuessesbyidService.getGuesses( { gameid: $scope.gameid, limit: 5 } );
 
-        $scope.dialog = $scope.gdResult;
-
-        this.sendMessage = function() {
-            if ($scope.textMessage.length > 2)
-            {
-                $scope.dialog.list.push({
-                    type: "question",
-                    text: $scope.textMessage
-                });
-                $scope.textMessage = '';
-                $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_2_container').height());
-            }
+        this.sendMessage = function(event) {
             
+            if (event.which == 13 || event.which == 1)
+            {
+                event.preventDefault();
+
+                if ($scope.textMessage.length == 2 && $scope.textMessage.slice(1,2) == '?')
+                {
+                    var firstSymbol = $scope.textMessage.slice(0,1);
+
+                    var hint = new Hint(firstSymbol, $scope.gameid);
+                    hint.check().then(function() {
+                        if (hint.answer.data.hint.match)
+                        {
+                            $scope.gdResultGuesses.guesses.push({ word: '"' + firstSymbol + '"' + ' is here' });
+                        }
+                        else
+                        {
+                            $scope.gdResultGuesses.guesses.push({ word: '"' + firstSymbol + '"' + ' isn\'t here' });
+                        }
+                        $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_2_container').height());
+                    });
+                    $scope.textMessage = '';
+                }
+                else if ($scope.textMessage.length == $scope.gdResultGameStatus.game.secret.length)
+                {
+                    var guess = new Guess($scope.textMessage, $scope.gameid);
+                    guess.create().then(function() {
+                        console.log(guess);
+                        if (guess.answer.data.guess.exact)
+                        {
+                            $scope.gdResultGuesses.guesses.push(guess.answer.data.guess);
+                            $scope.gdResultGuesses.guesses.push({ word: 'Congratulations! You write the correct word!' });
+                            $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_2_container').height());
+                        }
+                        else
+                        {
+                            $scope.gdResultGuesses.guesses.push(guess.answer.data.guess);
+                            $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_2_container').height());
+                        }
+                        
+                    });
+                    $scope.textMessage = '';
+                    $scope.gdResultGameStatus   = getGameStatusbyidService.getGame( { gameid: $scope.gameid } );
+                    $scope.gdResultBestGuesses  = getBestGuessesbyidService.getGuesses( { gameid: $scope.gameid, limit: 5 } );
+                    $scope.gdResultZeroGuesses  = getZeroGuessesbyidService.getGuesses( { gameid: $scope.gameid, limit: 5 } );
+                    
+                }
+
+            }
         }
+
+        this.stopGame = function() {
+            var game = new Game(false, $scope.gameid);
+            game.stop().then(function() {
+                $location.path('/home');
+            });
+        }
+    })
+
+    .controller('gamelistCtrl', function($scope, getGamelistService){
+        //Get Recent Game Dialog
+        $scope.textMessage = '';
+
+        $scope.gdResult = getGamelistService.getGames();
+
     })
 
 
@@ -147,11 +226,6 @@ bullsCows
         }
     
     })
-
-
-
-
-
 
 
     //=================================================
