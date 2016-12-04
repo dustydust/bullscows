@@ -1,10 +1,9 @@
 bullsCows
-    .config(function ($stateProvider, $urlRouterProvider){
+    .config(function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/home");
 
 
         $stateProvider
-        
             //------------------------------
             // HOME
             //------------------------------
@@ -15,16 +14,13 @@ bullsCows
             })
             
 
-            .state ('game', {
-                url: '/game',
-                templateUrl: 'views/game-common.html'
+            .state ('games', {
+                url: '/games/:gameid',
+                templateUrl: 'views/game.html',
+                controller: function($scope, $stateParams) {
+                    $scope.gameid = $stateParams.gameid;
+                }
             })
-
-            .state ('game.process', {
-                url: '/process',
-                templateUrl: 'views/game.html'
-            })
-
 
             .state ('user', {
                 url: '/user',

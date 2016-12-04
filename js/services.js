@@ -17,6 +17,11 @@ bullsCows
     }])
 
 
+    // =========================================================================
+    // Services for game 
+    // =========================================================================
+
+
     .service('getgamedialogService', ['$resource', function($resource) {
         this.getDialog = function(type, text) {
             var dList = $resource("data/gamedialog.json");
@@ -24,6 +29,78 @@ bullsCows
             return dList.get({
                 type: type,
                 text: text
+            });
+        }
+    }])
+
+    // Get list of created games
+
+    .service('getGamelistService', ['$resource', function($resource) {
+        this.getGames = function(link, source) {
+            var dGames = $resource('http://s-bullsandcowsbot.herokuapp.com/games?status=created');
+            
+            return dGames.get({
+                // link: link,
+                // source: source
+            });
+        }
+    }])
+
+    // Get guesslist of game
+
+    .service('getGuessesbyidService', ['$resource', function($resource) {
+        this.getGuesses = function(params) { // gameid, word, bulls, cows
+            var dGuesses = $resource('http://s-bullsandcowsbot.herokuapp.com/games/:gameid/guesses');
+            return dGuesses.get({
+                gameid: params.gameid
+            });
+        }
+    }])
+
+    // Get best guesslist of game
+
+    .service('getBestGuessesbyidService', ['$resource', function($resource) {
+        this.getGuesses = function(params) {
+            var dGuesses = $resource('http://s-bullsandcowsbot.herokuapp.com/games/:gameid/guesses?best=:limit');
+            return dGuesses.get({
+                gameid: params.gameid,
+                limit: params.limit
+            });
+        }
+    }])
+
+    // Get zero guesslist of game
+
+    .service('getZeroGuessesbyidService', ['$resource', function($resource) {
+        this.getGuesses = function(params) {
+            var dGuesses = $resource('http://s-bullsandcowsbot.herokuapp.com/games/:gameid/guesses?zero=:limit');
+            return dGuesses.get({
+                gameid: params.gameid,
+                limit: params.limit
+            });
+        }
+    }])
+
+    // Get game status
+
+    .service('getGameStatusbyidService', ['$resource', function($resource) {
+        this.getGame = function(params) {
+            var dGame = $resource('http://s-bullsandcowsbot.herokuapp.com/games/:gameid');
+            return dGame.get({
+                gameid: params.gameid
+            });
+        }
+    }])
+
+
+    // Post game guess
+
+    .service('postGuesstoidService', ['$resource', function($resource) {
+        this.postGuess = function(params) {
+            var dGuess = $resource('http://s-bullsandcowsbot.herokuapp.com/games/:gameid/guesses', { gameid: '@gameid' });
+            return dGuess.post({
+                gameid: params.gameid,
+                guess: params.guess
             });
         }
     }])

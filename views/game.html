@@ -1,97 +1,137 @@
-<div class="container">
-    <div class="block-header">
-        <h2>Game process</h2>
-    </div>
+<header id="header" data-current-skin={{mactrl.currentSkin}} data-ng-include src="'template/header.html'" data-ng-controller="headerCtrl as hctrl"></header>
 
-    <style>
+<section id="main">
+    <aside id="sidebar" data-ng-include src="'template/sidebar-left.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
 
-    </style>
+    <section id="content" class="page-view">
+      <div class="container">
+          <div class="block-header">
+              <h2>Game process</h2>
+          </div>
 
-    <div class="card" id="messages-main" data-ng-controller="gamedialogCtrl as gdctrl">
+          <style>
 
-        <div class="ms-menu c-overflow " data-ng-class="{ 'toggled': mactrl.lvMenuStat }">
-            <div class="ms-block">
-                <p><strong>Stats</strong></p>
-                Time elasped: 7:12:03
-                <br/>
-                Words sent: 14
-            </div>
+          </style>
 
-            <div class="ms-block">
-                <p><strong>Bests</strong></p>
-                Guacamole — Bulls: 3, Cows: 3<br/>
-                Mariotti — Bulls: 3, Cows: 1<br/>
-                Pacini — Bulls: 2, Cows: 0<br/>
-                Vito — Bulls: 0, Cows: 1<br/>
-                Mario — Bulls: 0, Cows: 1<br/>
-            </div>
+          <div class="card" id="messages-main" data-ng-controller="gamedialogCtrl as gdctrl">
 
-        </div>
- 
-        <div class="ms-body">
-            <div class="listview lv-message">
-                <div class="lv-header-alt clearfix">
+              <div class="ms-menu c-overflow " data-ng-class="{ 'toggled': mactrl.lvMenuStat }">
+                  <div class="ms-block">
+                      <p><strong>Stats</strong></p>
+                      Game id: {{ gameid }}
+                      <br/>
+                      Status: {{ gdResultGameStatus.game.status }}
+                      <br/>
+                      Tries: {{ gdResultGameStatus.game.tries }}
+                      <br/>
+                      Hints: {{ gdResultGameStatus.game.hints }}
+                  </div>
 
-                    <div id="ms-menu-trigger"  data-ng-class="{ 'open': mactrl.lvMenuStat }" data-ng-click="mactrl.lvMenuStat = (mactrl.lvMenuStat===true ? false : true )">
-                        <div class="line-wrap">
-                            <div class="line top"></div>
-                            <div class="line center"></div>
-                            <div class="line bottom"></div>
-                        </div>
-                    </div>
+                  <div class="ms-block">
+                      <p><b>Best</b></p>
+                      <div data-ng-repeat="bestGuess in gdResultBestGuesses.best">
+                          <b>{{ bestGuess.word }}</b> — bulls: {{ bestGuess.bulls }}, cows: {{ bestGuess.cows }}
+                      </div>
+                  </div>
 
-                    <ul class="lv-actions actions">
-                        <li class="dropdown" uib-dropdown>
-                            <a href="" uib-dropdown-toggle aria-expanded="true">
-                                <i class="zmdi zmdi-more-vert"></i>
-                            </a>
+                  <div class="ms-block">
+                      <p><b>Zero</b></p>
+                      <div data-ng-repeat="zeroGuess in gdResultZeroGuesses.zero">
+                          <b>{{ zeroGuess.word }}</b> — bulls: {{ zeroGuess.bulls }}, cows: {{ zeroGuess.cows }}
+                      </div>
+                  </div>
 
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li>
-                                    <a href="">Refresh</a>
-                                </li>
-                                <li>
-                                    <a href="">Message Settings</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+              </div>
+       
+              <div class="ms-body">
+                  <div class="listview lv-message">
+                      <div class="lv-header-alt clearfix">
 
-                <div class="lv-body mb-list">
-                    <div class="mbl-messages c-overflow">
-                        <div 
-                            data-ng-repeat="message in gdResult.list"
-                            class="lv-item media "
-                            ng-class="{'right' : message.type == 'question'}">
-                            <div 
-                                class="lv-avatar "
-                                ng-class="{'pull-left' : message.type == 'answer', 'pull-right': message.type == 'question'}">
-                                <i class="zmdi zmdi-mood"></i>
-                            </div>
-                            <div class="media-body">
-                                <div class="ms-item">
-                                    {{ message.text }}
+                          <div id="ms-menu-trigger"  data-ng-class="{ 'open': mactrl.lvMenuStat }" data-ng-click="mactrl.lvMenuStat = (mactrl.lvMenuStat===true ? false : true )">
+                              <div class="line-wrap">
+                                  <div class="line top"></div>
+                                  <div class="line center"></div>
+                                  <div class="line bottom"></div>
+                              </div>
+                          </div>
+
+                        
+                          <ul class="lv-actions actions">
+                              <li class="dropdown" uib-dropdown>
+                                  <a href="" uib-dropdown-toggle aria-expanded="true">
+                                      <i class="zmdi zmdi-more-vert"></i>
+                                  </a>
+
+                                  <ul class="dropdown-menu dropdown-menu-right">
+                                      <li>
+                                          <a href="">Refresh</a>
+                                      </li>
+                                      <li>
+                                          <a href="" data-ng-click="gdctrl.stopGame()">Stop game</a>
+                                      </li>
+                                  </ul>
+                              </li>
+                          </ul>
+                       
+
+                      </div>
+
+                      <div class="lv-body mb-list">
+                          <div class="mbl-messages c-overflow">
+                              <!-- <div 
+                                  data-ng-repeat="message in gdResult.list"
+                                  class="lv-item media "
+                                  ng-class="{'right' : message.type == 'question'}">
+                                  <div 
+                                      class="lv-avatar "
+                                      ng-class="{'pull-left' : message.type == 'answer', 'pull-right': message.type == 'question'}">
+                                      <i class="zmdi zmdi-mood"></i>
+                                  </div>
+                                  <div class="media-body">
+                                      <div class="ms-item">
+                                          {{ message.text }}
+                                      </div>
+                                      <small class="ms-date"><i class="zmdi zmdi-time"></i> 20/02/2015 at 09:00</small>
+                                  </div>
+                              </div> -->
+
+                              <div 
+                                  data-ng-repeat="guess in gdResultGuesses.guesses"
+                                  class="lv-item media ">
+                                  <div class="lv-avatar pull-left">
+                                      <i class="zmdi zmdi-mood"></i>
+                                  </div>
+                                  <div class="media-body">
+                                      <div class="ms-item">
+
+                                          <b>{{ guess.word }}</b>
+                                          {{ (guess.bulls >= 0) ? ', bulls — ' + guess.bulls : ''}}
+                                          {{ (guess.cows >= 0) ? ', cows — ' + guess.cows : ''}}
+                                          
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                            <div class="mbl-compose">
+                                <div class="lv-footer ms-reply">
+                                    <textarea ng-model="textMessage" ng-keypress="gdctrl.sendMessage($event)" placeholder="What's on your mind...">{{ textMessage }}</textarea>
+                                    <button data-ng-click="gdctrl.sendMessage($event)"><i class="zmdi zmdi-mail-send"></i></button>
                                 </div>
-                                <small class="ms-date"><i class="zmdi zmdi-time"></i> 20/02/2015 at 09:00</small>
                             </div>
-                        </div>
-                    </div>
 
-                    
+                      </div>
+                      
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
 
-                    <div class="mbl-compose">
-                        <div class="lv-footer ms-reply">
-                            <textarea ng-model="textMessage" placeholder="What's on your mind...">{{ textMessage }}</textarea>
-                            <button data-ng-click="gdctrl.sendMessage()"><i class="zmdi zmdi-mail-send"></i></button>
-                        </div>
-                    </div>
-                    
+    </section>
 
-                </div>
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
+</section>
+
+<footer id="footer" data-ng-include src="'template/footer.html'"></footer>
+
+

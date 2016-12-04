@@ -7,82 +7,71 @@
 
     <section id="content">
 
-        <div class="container text-center">
-            <h1>Bulls & Cows</h1>
-            <p class="lead">The game about words and tears linguists ;-)</p>
+        <div class="container">
+            <div class="text-center">
+                <h1>Bulls & Cows</h1>
+                <p class="lead">The game about linguists and their tears  ;-)</p>
+            </div>
 
-            <div class="card m-t-30  p-t-15 p-b-30">
-                <div class="card-header">
-                    <h3 class="m-t-0">Choose difficulty</h3>
-                    <p class="max-w-500 m-auto">Donec ultricies, lacus id tempor condimentum, orci leo faucibus sem, a molestie libero lectus ac justo. ultricies mi eros, sit amet tempor nulla varius sed. Proin nisl nisi, feugiat quis bibendum vitae, dapibus in tellus.</p>
+            <div class="row">
+
+                <div class="col-md-6" data-ng-controller="gamelistCtrl as gctrl">
+                    <div class="card m-t-30 p-t-15 p-b-30">
+                        <div class="card-header p-t-15 p-b-30 text-center">
+                            <h3 class="m-t-0">Connect to game</h3>
+                            <p class="max-w-500 m-auto">Donec ultricies, lacus id tempor condimentum, orci leo faucibus sem, a molestie libero lectus ac justo.</p>
+                        </div>
+
+
+                        <div class="list-group lg-odd-black c-overflow games-list">
+                            
+                            <a
+                                class="list-group-item"
+                                data-ng-repeat="game in gdResult.games"
+                                data-game-link="{{ game.link }}"
+                                ng-href="#{{ game.link }}"
+                                ng-if="game.status == 'created' "
+                            >
+
+                                <div class="lgi-text">Game {{ game.secret }}</div>
+
+                                <ul class="lgi-attrs">
+                                    <li>{{ game.source }}</li>
+                                    <li>{{ game.language }}</li>
+                                    <li>tries - {{ game.tries }}</li>
+                                    <li>hints - {{ game.hints }}</li>
+                                    <li>{{ game.status }}</li>
+                                </ul>
+                            </a>
+
+                        </div>
+
+                    </div>
                 </div>
 
+                <div class="col-md-6" data-ng-controller="creategameCtrl as cgctrl">
+                    <div class="card m-t-30  p-t-15 p-b-30 text-center">
+                        <div class="card-header">
+                            <h3 class="m-t-0">Create game</h3>
+                            <!-- <p class="max-w-500 m-auto">Please, use words 4+ letters</p> -->
+                        </div>
 
-                <div class="card-body card-padding p-t-0">
-                    <label class="radio radio-inline m-r-20">
-                        <input type="radio" name="inlineRadioOptionsA" value="option1">
-                        <i class="input-helper"></i>
-                        The usual Tuesday
-                    </label>
+                        <div class="card-body card-padding">
+                            <p class="c-black f-500 m-t-20 m-b-20">Please, use words 4+ letters</p>
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    <input ng-model="secretWord" type="text" class="form-control input-lg" placeholder="Secret word">
+                                </div>
+                            </div>
+                        </div>
 
-                    <label class="radio radio-inline m-r-20">
-                        <input type="radio" name="inlineRadioOptionsA" value="option2">
-                        <i class="input-helper"></i>
-                        Prepare dictionary
-                    </label>
-
-                    <label class="radio radio-inline m-r-20">
-                        <input type="radio" name="inlineRadioOptionsA" value="option3">
-                        <i class="input-helper"></i>
-                        Welcome to Hell
-                    </label>
+                        <button class="btn bgm-orange btn-lg m-t-30" data-ng-click="cgctrl.createGame()">Start game</button>
+                    </div>
                 </div>
 
-                <div class="card-header">
-                    <h3 class="m-t-0">Choose word length</h3>
-                </div>
-
-                <div class="card-body card-padding">
-                    <label class="radio radio-inline m-r-20">
-                        <input type="radio" name="inlineRadioOptions" value="option1">
-                        <i class="input-helper"></i>
-                        4
-                    </label>
-
-                    <label class="radio radio-inline m-r-20">
-                        <input type="radio" name="inlineRadioOptions" value="option2">
-                        <i class="input-helper"></i>
-                        5
-                    </label>
-
-                    <label class="radio radio-inline m-r-20">
-                        <input type="radio" name="inlineRadioOptions" value="option3">
-                        <i class="input-helper"></i>
-                        6
-                    </label>
-
-                    <label class="radio radio-inline m-r-20">
-                        <input type="radio" name="inlineRadioOptions" value="option3">
-                        <i class="input-helper"></i>
-                        7
-                    </label>
-
-                    <label class="radio radio-inline m-r-20">
-                        <input type="radio" name="inlineRadioOptions" value="option3">
-                        <i class="input-helper"></i>
-                        8
-                    </label>
-
-                    <label class="radio radio-inline m-r-20">
-                        <input type="radio" name="inlineRadioOptions" value="option3">
-                        <i class="input-helper"></i>
-                        9
-                    </label>
-                </div>
             </div>
 
 
-            <button class="btn bgm-orange btn-lg m-t-30">Start game</button>
         </div>
 
     </section>

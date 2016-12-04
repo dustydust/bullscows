@@ -12582,7 +12582,8 @@ a.thumbnail.active {
   top: 0;
   background: #F8F8F8;
   border-right: 1px solid #EEE;
-  padding-bottom: 50px;
+  /*padding-bottom: 50px;*/
+  padding-bottom: 1px;
   height: 100%;
   width: 240px;
   -webkit-transition: all;
@@ -16154,4 +16155,85 @@ select.chosen {
 .ms-reply {
   box-shadow: none;
 }
+
+.list-group {
+  margin-bottom: 0;
+}
+
+.list-group.lg-even-black .list-group-item:nth-child(even), .list-group.lg-odd-black .list-group-item:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.list-group .list-group-item {
+  border: 0;
+  margin: 0;
+  padding: 15px 30px;
+  cursor: pointer;
+}
+
+.list-group .list-group-item:hover {
+  background-color: #FFF4F0 !important;
+}
+
+
+
+.list-group-item:first-child {
+  border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
+}
+
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid #E9E9E9;
+}
+
+.lgi-heading, .lgi-text:not(:last-child) {
+  margin-bottom: 4px;
+}
+.lgi-heading, .lgi-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lgi-attrs>li, .lgi-text {
+  font-size: 12px;
+  color: #777;
+}
+.ie9 .sidebar-alt.toggled, .lgi-heading, .lgi-text {
+  display: block;
+}
+.lgi-attrs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.lgi-attrs>li {
+  display: inline-block;
+  border: 1px solid #f0f0f0;
+  margin: 2px 2px 2px 0;
+  padding: 2px 5px;
+}
+.lgi-attrs>li, .lgi-text {
+  font-size: 12px;
+  color: #777;
+}
+.analytics-img-country {
+  height: 13px;
+  width: 18px;
+  vertical-align: top;
+  position: relative;
+  top: 2px;
+  margin-right: 5px;
+  left: -1px;
+  border-radius: 1px;
+}
+
+.games-list {
+  
+}
+
 
