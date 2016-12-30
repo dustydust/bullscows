@@ -60,11 +60,87 @@ bullsCows
     {
         $scope.secretWord = '';
 
+        this.showBlocks = {
+            createMenu: false,
+            gameHelp: false
+        }
+
+        this.gameLang = {
+            selected: { val: 'EN' }, // by default
+            list: [
+                { val: 'EN' },
+                { val: 'RU' },
+                { val: 'IT' },
+                { val: 'DE' },
+                { val: 'FR' }
+            ]
+        }
+
+        this.gameParams = {
+            length: {
+                selected: { val: 6 }, // by default
+                list: [
+                    { val: 4 },
+                    { val: 5 },
+                    { val: 6 },
+                    { val: 7 },
+                    { val: 8 }
+                ]
+            },
+            difficulty: {
+                selected: { val: 'easy'}, // by default
+                list: [
+                    { val: 'easy' },
+                    { val: 'normal' },
+                    { val: 'hard' }
+                ]
+            },
+            secret: ''
+        }
+
+        this.showHelp = function(event) {
+            console.log('asd');
+            if (this.showBlocks.gameHelp == false)
+                this.showBlocks.gameHelp = true;
+            else
+                this.showBlocks.gameHelp = false;
+        }
+
+        this.setLang = function(item) {
+            this.gameLang.selected = item;
+        }
+
+        this.setLength = function(item) {
+            this.gameParams.length.selected = item;
+        }
+
+        this.setDifficulty = function(item) {
+            this.gameParams.difficulty.selected = item;
+        }
+
+
+        this.showCreateMenu = function(event) {
+            if (this.showBlocks.createMenu == false)
+                this.showBlocks.createMenu = true;
+            else
+                this.showBlocks.createMenu = false;
+        }
+
         this.createGame = function () {
             var secret = $scope.secretWord;
             if (secret.length > 3)
             {
                 var game = new Game(secret);
+                game.create().then(function() {
+                    if (game.answer.data.game.link)
+                    {
+                        $location.path(game.answer.data.game.link);
+                    }
+                });
+            }
+            else
+            {
+                var game = new Game(false, false, this.gameParams.length.selected.val, this.gameParams.difficulty.selected.val);
                 game.create().then(function() {
                     if (game.answer.data.game.link)
                     {
@@ -90,64 +166,78 @@ bullsCows
                                             postGuesstoidService
                                         )
         {
+
+        this.showBlocks = {
+            gameMenu: false,
+            gameHelp: false
+        }
+
         //Get Recent Game Dialog
         $scope.textMessage = '';
-
         $scope.gdResultGuesses      = getGuessesbyidService.getGuesses( { gameid: $scope.gameid } );
         $scope.gdResultGameStatus   = getGameStatusbyidService.getGame( { gameid: $scope.gameid } );
-        $scope.gdResultBestGuesses  = getBestGuessesbyidService.getGuesses( { gameid: $scope.gameid, limit: 5 } );
+        
         $scope.gdResultZeroGuesses  = getZeroGuessesbyidService.getGuesses( { gameid: $scope.gameid, limit: 5 } );
 
-        this.sendMessage = function(event) {
-            
-            if (event.which == 13 || event.which == 1)
-            {
-                event.preventDefault();
+        // Get quantity of Hints
+        // this.getHintsQuantity = function(event) {
+        //     var hint = new Hint(false, $scope.gameid);
+        //     hint.getAll().then(function() {
+        //         $scope.valval = hint.answer.data.hints.length;
+        //     });
+        // }
+        // Because better get all of quntities by one request from Game details
 
-                if ($scope.textMessage.length == 2 && $scope.textMessage.slice(1,2) == '?')
-                {
-                    var firstSymbol = $scope.textMessage.slice(0,1);
+        this.showGameMenu = function(event) {
+            if (this.showBlocks.gameMenu == false)
+                this.showBlocks.gameMenu = true;
+            else
+                this.showBlocks.gameMenu = false;
+        }
 
-                    var hint = new Hint(firstSymbol, $scope.gameid);
-                    hint.check().then(function() {
-                        if (hint.answer.data.hint.match)
-                        {
-                            $scope.gdResultGuesses.guesses.push({ word: '"' + firstSymbol + '"' + ' is here' });
-                        }
-                        else
-                        {
-                            $scope.gdResultGuesses.guesses.push({ word: '"' + firstSymbol + '"' + ' isn\'t here' });
-                        }
-                        $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_2_container').height());
-                    });
-                    $scope.textMessage = '';
+        this.showHelp = function(event) {
+            this.showBlocks.gameMenu = false;
+
+            if (this.showBlocks.gameHelp == false)
+                this.showBlocks.gameHelp = true;
+            else
+                this.showBlocks.gameHelp = false;
+        }
+
+        this.showBests = function(event) {
+            var guess = new Guess(false, $scope.gameid);
+            guess.getBest().then(function() {
+                $scope.gdResultGuesses.guesses.push({ word: 'Best', class: 'best' });
+                for (var i = 0; i < guess.answer.data.best.length; i++) {
+                    $scope.gdResultGuesses.guesses.push({ word: guess.answer.data.best[i].word, bulls: guess.answer.data.best[i].bulls, cows: guess.answer.data.best[i].cows, class: 'best-detail' });
                 }
-                else if ($scope.textMessage.length == $scope.gdResultGameStatus.game.secret.length)
-                {
-                    var guess = new Guess($scope.textMessage, $scope.gameid);
-                    guess.create().then(function() {
-                        console.log(guess);
-                        if (guess.answer.data.guess.exact)
-                        {
-                            $scope.gdResultGuesses.guesses.push(guess.answer.data.guess);
-                            $scope.gdResultGuesses.guesses.push({ word: 'Congratulations! You write the correct word!' });
-                            $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_2_container').height());
-                        }
-                        else
-                        {
-                            $scope.gdResultGuesses.guesses.push(guess.answer.data.guess);
-                            $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_2_container').height());
-                        }
-                        
-                    });
-                    $scope.textMessage = '';
-                    $scope.gdResultGameStatus   = getGameStatusbyidService.getGame( { gameid: $scope.gameid } );
-                    $scope.gdResultBestGuesses  = getBestGuessesbyidService.getGuesses( { gameid: $scope.gameid, limit: 5 } );
-                    $scope.gdResultZeroGuesses  = getZeroGuessesbyidService.getGuesses( { gameid: $scope.gameid, limit: 5 } );
-                    
-                }
+                $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_1_container').height());
+            });
+            this.showBlocks.gameMenu = false;
+        }
 
-            }
+        this.showZeros = function(event) {
+            var guess = new Guess(false, $scope.gameid);
+            guess.getZero().then(function() {
+                $scope.gdResultGuesses.guesses.push({ word: 'Zero', class: 'zero' });
+                for (var i = 0; i < guess.answer.data.zero.length; i++) {
+                    $scope.gdResultGuesses.guesses.push({ word: guess.answer.data.zero[i].word, bulls: guess.answer.data.zero[i].bulls, cows: guess.answer.data.zero[i].cows, class: 'zero-detail' });
+                }
+                $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_1_container').height());
+            });
+            this.showBlocks.gameMenu = false;
+        }
+
+        this.showHints = function(event) {
+            var hint = new Hint(false, $scope.gameid);
+            hint.getAll().then(function() {
+                $scope.gdResultGuesses.guesses.push({ word: 'Hints', class: 'hints' });
+                for (var i = 0; i < hint.answer.data.hints.length; i++) {
+                    $scope.gdResultGuesses.guesses.push({ word: hint.answer.data.hints[i].letter, match: hint.answer.data.hints[i].match, class: 'hint-detail' });
+                }
+                $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_1_container').height());
+            });
+            this.showBlocks.gameMenu = false;
         }
 
         this.stopGame = function() {
@@ -156,14 +246,59 @@ bullsCows
                 $location.path('/home');
             });
         }
+
+        this.sendMessage = function(event) {
+
+            if (event.which == 13 || event.which == 1)
+            {
+                event.preventDefault();
+                if ($scope.textMessage.length == 2 && $scope.textMessage.slice(1,2) == '?')
+                {
+                    var firstSymbol = $scope.textMessage.slice(0,1);
+
+                    var hint = new Hint(firstSymbol, $scope.gameid);
+                    hint.check().then(function() {
+                        if (hint.answer.data.hint.match)
+                        {
+                            $scope.gdResultGuesses.guesses.push({ word: '"' + firstSymbol + '"' + ' has a match' });
+                        }
+                        else
+                        {
+                            $scope.gdResultGuesses.guesses.push({ word: '"' + firstSymbol + '"' + ' doesn\'t match' });
+                        }
+                        $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_1_container').height());
+                    });
+                    $scope.textMessage = '';
+                    $scope.gdResultGameStatus = getGameStatusbyidService.getGame( { gameid: $scope.gameid } );
+                }
+                else if ($scope.textMessage.length == $scope.gdResultGameStatus.game.secret.length)
+                {
+                    var guess = new Guess($scope.textMessage, $scope.gameid);
+                    guess.create().then(function() {
+                        if (guess.answer.data.guess.exact)
+                        {
+                            $scope.gdResultGuesses.guesses.push(guess.answer.data.guess);
+                            $scope.gdResultGuesses.guesses.push({ word: 'Congratulations! You write the correct word!' });
+                            $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_1_container').height());
+                        }
+                        else
+                        {
+                            $scope.gdResultGuesses.guesses.push(guess.answer.data.guess);
+                            $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_1_container').height());
+                        }
+                    });
+                    $scope.textMessage = '';
+                    $scope.gdResultGameStatus = getGameStatusbyidService.getGame( { gameid: $scope.gameid } );
+                }
+            }
+        }
+
     })
 
-    .controller('gamelistCtrl', function($scope, getGamelistService){
-        //Get Recent Game Dialog
+    .controller('gamelistCtrl', function($scope) {
+        // Get Recent Game Dialog
         $scope.textMessage = '';
-
-        $scope.gdResult = getGamelistService.getGames();
-
+        // $scope.gdResult = getGamelistService.getGames();
     })
 
 

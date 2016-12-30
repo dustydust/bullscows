@@ -1,0 +1,37 @@
+
+<div class="catcher">
+  <div class="menu-head text-center">
+    <button class="inline c-white" data-ng-click="gdctrl.showGameMenu($event)">
+      <i class="zmdi zmdi-chevron-left"></i>
+    </button>
+    <h2 class="inline c-white">Game Menu</h2>
+  </div>
+
+
+  <div class="page-view text-center">
+    <div class="option-group wide-btn-group add">
+      <div>
+        <button class="btn btn-default btn-lg" data-ng-click="gdctrl.showBests()">Best</button>
+      </div>
+      <div>
+        <button class="btn btn-default btn-lg" data-ng-click="gdctrl.showZeros()">Zero</button>
+      </div>
+      <div>
+        <button class="btn btn-default btn-lg" data-ng-click="">Tries</button>
+      </div>
+      <div>
+        <button class="btn btn-default btn-lg" data-ng-click="gdctrl.showHints()">Hints</button>
+      </div>
+
+      <hr>
+
+      <div>
+        <button class="btn btn-default btn-lg" data-ng-click="gdctrl.stopGame($event)">Abort Game</button>
+      </div>
+      <div>
+        <button class="btn btn-default btn-lg" data-ng-click="gdctrl.showHelp($event)">Help</button>
+      </div>
+    </div>
+  </div>
+
+</div>
