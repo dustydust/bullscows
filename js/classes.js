@@ -98,10 +98,11 @@ bullsCows
     .factory('Game', function($http) {
         var apiUrl = 'http://s-bullsandcowsbot.herokuapp.com/';
 
-        var Game = function(secret, gameId, length, complexity) {
+        var Game = function(secret, gameId, length, complexity, lang) {
             this.secret = secret;
             this.gameId = gameId;
             this.length = length;
+            this.lang = lang;
             this.complexity = complexity;
         };
 
@@ -110,7 +111,7 @@ bullsCows
                 data = {
                     'secret': this.secret,
                     'length': this.length,
-                    'language': 'EN',
+                    'language': this.lang,
                     'complexity': this.complexity
                 },
 

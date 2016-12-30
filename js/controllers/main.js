@@ -140,7 +140,7 @@ bullsCows
             }
             else
             {
-                var game = new Game(false, false, this.gameParams.length.selected.val, this.gameParams.difficulty.selected.val);
+                var game = new Game(false, false, this.gameParams.length.selected.val, this.gameParams.difficulty.selected.val, this.gameLang.selected.val);
                 game.create().then(function() {
                     if (game.answer.data.game.link)
                     {
