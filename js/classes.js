@@ -38,6 +38,59 @@ bullsCows
                 );
         };
 
+        Guess.prototype.getAll = function() {
+            var self = this;
+
+            return $http.get(apiUrl + 'games/' + this.gameId + '/guesses')
+                .then(
+                    function(response) {
+                        self.answer = response;
+                        return response;
+                    },
+                    function(response) {
+                        self.answer = response;
+                        return response;
+                    }
+                );
+        };
+
+        // From ES6/ES2015, default parameters is in the language specification.
+        // http://stackoverflow.com/questions/894860/set-a-default-parameter-value-for-a-javascript-function
+
+        Guess.prototype.getBest = function(count) {
+            var self = this;
+            count = count || 5; // 5 by default
+
+            return $http.get(apiUrl + 'games/' + this.gameId + '/guesses?best=' + count)
+                .then(
+                    function(response) {
+                        self.answer = response;
+                        return response;
+                    },
+                    function(response) {
+                        self.answer = response;
+                        return response;
+                    }
+                );
+        };
+
+        Guess.prototype.getZero = function(count) {
+            var self = this;
+            count = count || 5; // 5 by default
+
+            return $http.get(apiUrl + 'games/' + this.gameId + '/guesses?zero=' + count)
+                .then(
+                    function(response) {
+                        self.answer = response;
+                        return response;
+                    },
+                    function(response) {
+                        self.answer = response;
+                        return response;
+                    }
+                );
+        };
+
         return Guess;
     })
 
@@ -45,15 +98,20 @@ bullsCows
     .factory('Game', function($http) {
         var apiUrl = 'http://s-bullsandcowsbot.herokuapp.com/';
 
-        var Game = function(secret, gameId) {
+        var Game = function(secret, gameId, length, complexity) {
             this.secret = secret;
             this.gameId = gameId;
+            this.length = length;
+            this.complexity = complexity;
         };
 
         Game.prototype.create = function() {
             var self = this,
                 data = {
-                    'secret': this.secret
+                    'secret': this.secret,
+                    'length': this.length,
+                    'language': 'EN',
+                    'complexity': this.complexity
                 },
 
                 config = {
@@ -141,6 +199,22 @@ bullsCows
                 }
 
             return $http.post(apiUrl + 'games/' + this.gameId + '/hints', data, config)
+                .then(
+                    function(response) {
+                        self.answer = response;
+                        return response;
+                    },
+                    function(response) {
+                        self.answer = response;
+                        return response;
+                    }
+                );
+        }
+
+        Hint.prototype.getAll = function() {
+            var self = this;
+
+            return $http.get(apiUrl + 'games/' + this.gameId + '/hints')
                 .then(
                     function(response) {
                         self.answer = response;

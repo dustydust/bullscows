@@ -1,59 +1,44 @@
-<header id="header" data-current-skin={{mactrl.currentSkin}} data-ng-include="'template/header.html'" data-ng-controller="headerCtrl as hctrl"></header>
+<!-- <header id="header" data-current-skin={{mactrl.currentSkin}} data-ng-include="'template/header.html'" data-ng-controller="headerCtrl as hctrl"></header> -->
 
 <section id="main">
     <aside id="sidebar" data-ng-include="'template/sidebar-left.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
 
     <!-- <aside id="chat" data-ng-include="'template/chat.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside> -->
 
-    <section id="content">
+    <section id="content" data-ng-controller="creategameCtrl as cgctrl">
+
+        <section
+                id="game-help"
+                data-ng-include src="'template/game-help.html'" 
+                data-ng-class="{ 'toggled': cgctrl.showBlocks.gameHelp === true }">
+        </section>
 
         <div class="container">
             <div class="text-center">
                 <h1>Bulls & Cows</h1>
-                <p class="lead">The game about linguists and their tears  ;-)</p>
             </div>
 
             <div class="row">
+                <div class="col-md-12 text-center">
 
-                <div class="col-md-6" data-ng-controller="gamelistCtrl as gctrl">
-                    <div class="card m-t-30 p-t-15 p-b-30">
-                        <div class="card-header p-t-15 p-b-30 text-center">
-                            <h3 class="m-t-0">Connect to game</h3>
-                            <p class="max-w-500 m-auto">Donec ultricies, lacus id tempor condimentum, orci leo faucibus sem, a molestie libero lectus ac justo.</p>
+                    <div class="option-group text-center">
+                        <div class="group-name">
+                            <h3>Game language</h3>
                         </div>
 
-
-                        <div class="list-group lg-odd-black c-overflow games-list">
-                            
-                            <a
-                                class="list-group-item"
-                                data-ng-repeat="game in gdResult.games"
-                                data-game-link="{{ game.link }}"
-                                ng-href="#{{ game.link }}"
-                                ng-if="game.status == 'created' "
-                            >
-
-                                <div class="lgi-text">Game {{ game.secret }}</div>
-
-                                <ul class="lgi-attrs">
-                                    <li>{{ game.source }}</li>
-                                    <li>{{ game.language }}</li>
-                                    <li>tries - {{ game.tries }}</li>
-                                    <li>hints - {{ game.hints }}</li>
-                                    <li>{{ game.status }}</li>
-                                </ul>
-                            </a>
-
-                        </div>
-
+                        <button
+                                ng-repeat="lang in cgctrl.gameLang.list"
+                                class="btn btn-default btn-icon round-btn"
+                                ng-class="{'toggled': cgctrl.gameLang.selected.val === lang.val}" 
+                                ng-click="cgctrl.setLang(lang)">
+                                {{ lang.val }}
+                        </button>
                     </div>
-                </div>
 
-                <div class="col-md-6" data-ng-controller="creategameCtrl as cgctrl">
-                    <div class="card m-t-30  p-t-15 p-b-30 text-center">
+                    <!-- <div class="card m-t-30  p-t-15 p-b-30 text-center">
                         <div class="card-header">
                             <h3 class="m-t-0">Create game</h3>
-                            <!-- <p class="max-w-500 m-auto">Please, use words 4+ letters</p> -->
+                            <p class="max-w-500 m-auto">Please, use words 4+ letters</p>
                         </div>
 
                         <div class="card-body card-padding">
@@ -64,14 +49,94 @@
                                 </div>
                             </div>
                         </div>
+                    </div> -->
 
-                        <button class="btn bgm-orange btn-lg m-t-30" data-ng-click="cgctrl.createGame()">Start game</button>
+                    <!-- <button class="btn bgm-orange btn-lg m-t-30" data-ng-click="cgctrl.createGame()">Start game</button> -->
+                    <div class="option-group text-center wide-btn-group">
+                        <div>
+                            <button
+                                    class="btn btn-default btn-lg"
+                                    data-ng-click="cgctrl.showCreateMenu($event)">
+                                    Play
+                            </button>
+                        </div>
+                        <div>
+                            <button
+                                    class="btn btn-default btn-lg"
+                                    data-ng-click="cgctrl.showHelp($event)">
+                                    Help
+                            </button>
+                        </div>
                     </div>
                 </div>
 
             </div>
+        </div>
 
+        <div
+            class="container"
+            id="create-game"
+            data-ng-class="{ 'toggled': cgctrl.showBlocks.createMenu === true }">
 
+            <div class="catcher">
+                <div class="menu-head text-center">
+                  <button class="inline" data-ng-click="cgctrl.showCreateMenu($event)"><i class="zmdi zmdi-chevron-left"></i></button>
+                  <h2 class="inline">Game setup</h2>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-12 text-center">
+                    <div class="catcher">
+
+                        <div class="option-group add text-center">
+                            <div class="group-name">
+                                <h3>Letters</h3>
+                            </div>
+
+                            <button
+                                    ng-repeat="length in cgctrl.gameParams.length.list"
+                                    class="btn btn-default btn-icon round-btn"
+                                    ng-class="{'toggled': cgctrl.gameParams.length.selected.val === length.val}" 
+                                    ng-click="cgctrl.setLength(length)">
+                                    {{ length.val }}
+                            </button>
+
+                        </div>
+
+                        <div class="option-group add text-center">
+                            <div class="group-name">
+                                <h3>Difficulty</h3>
+                            </div>
+                            <button
+                                    ng-repeat="level in cgctrl.gameParams.difficulty.list"
+                                    class="btn btn-default btn-lg"
+                                    ng-class="{'toggled': cgctrl.gameParams.difficulty.selected.val === level.val}" 
+                                    ng-click="cgctrl.setDifficulty(level)">
+                                    {{ level.val }}
+                            </button>
+                        </div>
+
+                        <div class="separator-block text-center">
+                            <hr/>
+                            <h3 class="inline">OR</h3>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <input ng-model="cgctrl.gameParams.secret" type="text" class="form-control input-lg or-place" placeholder="Type your secret word here">
+                            </div>
+                        </div>
+
+                        <div class="option-group text-center wide-btn-group add">
+                            <button class="btn btn-default btn-lg m-t-30" data-ng-click="cgctrl.createGame(this)">Play</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
         </div>
 
     </section>

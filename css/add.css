@@ -1,0 +1,269 @@
+#loading-bar {
+  height: 3px;
+  overflow: hidden;
+}
+
+#loading-bar .bar {
+  height: 3px;
+  background-color: lightblue;
+}
+
+.pointer { cursor: pointer; }
+.inline { display: inline-block; }
+
+.catcher {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+#main {
+  position: initial;
+}
+
+.container h1 {
+  font-size: 45px;
+}
+
+.group-name h3 {
+  margin: 3em 0 1em;
+}
+
+.add .group-name h3 {
+  margin: 2em 0 1em;
+}
+
+.round-btn {
+  margin: 0 0.4em;
+}
+
+.or-place {
+  padding: 1em !important;
+}
+
+.separator-block {
+  position: relative;
+  margin: 2em 0;
+}
+
+.separator-block hr {
+  border-top: 1px solid #B7B7B7;
+  position: absolute;
+  width: 100%;
+  top: 0.9em;
+  z-index: -1;
+}
+
+.separator-block h3 {
+  background-color: #edecec;
+  padding: 0 10px;
+}
+
+.wide-btn-group {
+  margin-top: 8em;
+}
+
+.wide-btn-group.add {
+  margin-top: 3em;
+}
+
+.wide-btn-group .btn {
+  min-width: 245px;
+  margin-bottom: 1em;
+}
+
+
+#main.big-page {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+#messages-main {
+  overflow: hidden;
+  height: calc(100vh - 10px);
+}
+
+#messages-main .ms-body {
+  padding-left: 0px;
+}
+
+.mb-list {
+  height: calc(100vh);
+}
+
+.mbl-messages {
+  padding: 0px 0px 72px 0px;
+  height: calc(100vh);
+}
+
+.mbl-messages .media-body {
+  margin-top: 30px;
+}
+
+.mbl-messages .media-body.best-detail,
+.mbl-messages .media-body.zero-detail,
+.mbl-messages .media-body.hint-detail
+{
+  margin-top: 0px;
+}
+
+.mbl-compose {
+  bottom: 10px;
+}
+
+.lv-message .lv-item:not(.right) .ms-item {
+  background-color: #fff;
+  color: #333;
+}
+
+.lv-header-alt {
+  position: absolute;
+  top: 0;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 15px;
+  width: 100%;
+  z-index: 1;
+}
+
+.lv-header-alt .left-block {
+  float: left;
+}
+
+.lv-header-alt .left-block {
+  float: right;
+}
+
+.ms-reply button.send-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  height: 100%;
+  width: 60px;
+  font-size: 25px;
+  background: #F5F5F5;
+  color: #333;
+}
+
+.ms-reply button.menu-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  height: 100%;
+  width: 60px;
+  font-size: 25px;
+  background: #F5F5F5;
+  color: #333;
+}
+
+.lv-footer {
+  padding: 0px 65px 0 65px;
+}
+
+/* */
+
+/* */
+
+.option-group .btn.toggled {
+  background-color: #444;
+  color: #FFF;
+}
+
+/* CREATE GAME MENU */
+
+#create-game {
+  color: #FFF;
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #edecec;
+  z-index: 2;
+}
+
+#create-game.toggled {
+  display: block;
+}
+
+/* GAME MENU */
+
+#game-menu {
+  color: #FFF;
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 2;
+}
+
+#game-menu.toggled {
+  display: block;
+}
+
+#game-menu .menu-head,
+#game-menu .menu-head h3 {
+  color: #FFF;
+}
+
+.menu-head button {
+  border: none;
+  background: none;
+  color: #000;
+  font-size: 3.8em;
+  line-height: 1em;
+  top: 0.2em;
+  left: 0;
+  position: absolute;
+}
+
+/* HELP */
+
+#game-help {
+  color: #FFF;
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 2;
+}
+
+#game-help .page-view {
+  font-size: 20px;
+}
+
+#game-help.toggled {
+  display: block;
+}
+
+#game-help .menu-head,
+#game-help .menu-head h3 {
+  color: #FFF;
+}
+
+#game-help ul li {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+#game-help ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+#game-help .hd {
+  font-weight: 800;
+}
+
+#game-help .text {
+  margin-bottom: 1.3em;
+}
