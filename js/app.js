@@ -1,10 +1,10 @@
 var bullsCows = angular.module('bullsCows', [
-    'ngAnimate',
+    // 'ngAnimate',
     'ngResource',
     'ui.router',
-    'ui.bootstrap',
+    // 'ui.bootstrap',
     'angular-loading-bar',
-    'oc.lazyLoad',
+    // 'oc.lazyLoad',
 ]);
 
 // bullsCows.constant('backDomain', 'http://s-bullsandcowsbot.herokuapp.com');

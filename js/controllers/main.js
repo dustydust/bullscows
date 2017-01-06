@@ -211,7 +211,7 @@ bullsCows
                 for (var i = 0; i < guess.answer.data.best.length; i++) {
                     $scope.gdResultGuesses.guesses.push({ word: guess.answer.data.best[i].word, bulls: guess.answer.data.best[i].bulls, cows: guess.answer.data.best[i].cows, class: 'best-detail' });
                 }
-                $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_1_container').height());
+                $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#process-game-window').height());
             });
             this.showBlocks.gameMenu = false;
         }
@@ -223,7 +223,7 @@ bullsCows
                 for (var i = 0; i < guess.answer.data.zero.length; i++) {
                     $scope.gdResultGuesses.guesses.push({ word: guess.answer.data.zero[i].word, bulls: guess.answer.data.zero[i].bulls, cows: guess.answer.data.zero[i].cows, class: 'zero-detail' });
                 }
-                $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_1_container').height());
+                $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#process-game-window').height());
             });
             this.showBlocks.gameMenu = false;
         }
@@ -235,7 +235,7 @@ bullsCows
                 for (var i = 0; i < hint.answer.data.hints.length; i++) {
                     $scope.gdResultGuesses.guesses.push({ word: hint.answer.data.hints[i].letter, match: hint.answer.data.hints[i].match, class: 'hint-detail' });
                 }
-                $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_1_container').height());
+                $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#process-game-window').height());
             });
             this.showBlocks.gameMenu = false;
         }
@@ -266,7 +266,7 @@ bullsCows
                         {
                             $scope.gdResultGuesses.guesses.push({ word: '"' + firstSymbol + '"' + ' doesn\'t match' });
                         }
-                        $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_1_container').height());
+                        $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#process-game-window').height());
                     });
                     $scope.textMessage = '';
                     $scope.gdResultGameStatus = getGameStatusbyidService.getGame( { gameid: $scope.gameid } );
@@ -279,12 +279,12 @@ bullsCows
                         {
                             $scope.gdResultGuesses.guesses.push(guess.answer.data.guess);
                             $scope.gdResultGuesses.guesses.push({ word: 'Congratulations! You write the correct word!' });
-                            $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_1_container').height());
+                            $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#process-game-window').height());
                         }
                         else
                         {
                             $scope.gdResultGuesses.guesses.push(guess.answer.data.guess);
-                            $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#mCSB_1_container').height());
+                            $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#process-game-window').height());
                         }
                     });
                     $scope.textMessage = '';
@@ -311,14 +311,14 @@ bullsCows
         this.clearLocalStorage = function() {
             
             //Get confirmation, if confirmed clear the localStorage
-            swal({   
-                title: "Are you sure?",   
-                text: "All your saved localStorage values will be removed",   
-                type: "warning",   
-                showCancelButton: true,   
-                confirmButtonColor: "#F44336",   
-                confirmButtonText: "Yes, delete it!",   
-                closeOnConfirm: false 
+            swal({
+                title: "Are you sure?",
+                text: "All your saved localStorage values will be removed",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#F44336",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
             }, function(){
                 localStorage.clear();
                 swal("Done!", "localStorage is cleared", "success"); 
