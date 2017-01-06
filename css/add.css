@@ -80,7 +80,7 @@
 
 #messages-main {
   overflow: hidden;
-  height: calc(100vh - 10px);
+  height: calc(100vh);
 }
 
 #messages-main .ms-body {
@@ -91,8 +91,25 @@
   height: calc(100vh);
 }
 
+.page-view .container {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.ms-reply .message-input {
+  width: 100%;
+  font-size: 1.5em;
+  border: 0;
+  padding: 10px 8px;
+  resize: none;
+  height: 50px;
+  line-height: 1.1em;
+  text-align: center;
+}
+
 .mbl-messages {
-  padding: 0px 0px 72px 0px;
+  /*padding: 0px 0px 72px 0px;*/
+  padding: 0px 0px 52px 0px;
   height: calc(100vh);
 }
 
@@ -108,7 +125,7 @@
 }
 
 .mbl-compose {
-  bottom: 10px;
+  bottom: 0px;
 }
 
 .lv-message .lv-item:not(.right) .ms-item {
@@ -119,18 +136,18 @@
 .lv-header-alt {
   position: absolute;
   top: 0;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.9);
   padding: 15px;
   width: 100%;
   z-index: 1;
 }
 
-.lv-header-alt .left-block {
-  float: left;
+.lv-header-alt .right-block {
+  float: right;
 }
 
 .lv-header-alt .left-block {
-  float: right;
+  float: left;
 }
 
 .ms-reply button.send-btn {
@@ -198,6 +215,8 @@
   top: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
   background-color: rgba(0,0,0,0.6);
   z-index: 2;
 }
@@ -232,6 +251,8 @@
   top: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
   background-color: rgba(0,0,0,0.8);
   z-index: 2;
 }
@@ -266,4 +287,103 @@
 
 #game-help .text {
   margin-bottom: 1.3em;
+}
+
+
+@media (max-width: 480px) {
+
+  /* START SCREEN AND COMMONS */
+
+  #main {
+    position: relative;
+    padding-bottom: 50px;
+    padding-top: 50px;
+  }
+
+  .container h1 {
+    font-size: 2.5em;
+  }
+
+  h3, .h3 {
+    font-size: 1.4em;
+  }
+
+  .group-name h3 {
+    margin: 2.5em 0 1.5em;
+  }
+
+  #footer {
+    padding-top: 70px;
+  }
+
+  /* START SCREEN : END */
+
+  /* GAME SETUP */
+
+  .menu-head button {
+    top: 0.15em;
+  }
+
+  .add .group-name h3 {
+    margin: 1.5em 0 1em;
+  }
+
+  .wide-btn-group.add {
+    margin-top: 0em;
+  }
+
+  .btn-lg, .btn-group-lg > .btn {
+    font-size: 16px;
+  }
+
+  .separator-block {
+    position: relative;
+    margin: 1.4em 0 2em;
+  }
+
+  /* GAME SETUP : END */
+
+  /* GAME PROCESS */
+
+  .lv-footer {
+    padding: 0px 45px 0 45px;
+  }
+
+  .ms-reply button.menu-btn {
+    width: 50px;
+  }
+
+  .ms-reply button.send-btn {
+    width: 50px;
+  }
+
+  .ms-reply textarea {
+    height: 50px;
+  }
+
+  .mbl-messages {
+    padding: 0px 0px 52px 0px;
+  }
+
+  /* GAME PROCESS : END */
+
+  /* GAME MENU */
+
+  #game-menu .page-view {
+    margin-top: 3em;
+  }
+
+  /* GAME MENU : END */
+
+  /* GAME HELP */
+
+  #game-help {
+
+  }
+
+  #game-help .page-view {
+    font-size: 1.1em;
+  }
+
+  /* GAME HELP : END*/
 }

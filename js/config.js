@@ -32,4 +32,8 @@ bullsCows
                 templateUrl: 'views/settings.html'
             })
 
-    });
+    })
+
+    .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+        cfpLoadingBarProvider.includeSpinner = false;
+    }]);

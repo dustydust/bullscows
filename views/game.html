@@ -53,12 +53,14 @@
                                         data-ng-click="gdctrl.showGameMenu($event)">
                                     <i class="zmdi zmdi-menu"></i>
                                   </button>
-                                  <textarea
-                                          ng-model="textMessage"
-                                          ng-keypress="gdctrl.sendMessage($event)"
-                                          placeholder="What's on your mind...">
-                                          {{ textMessage }}
-                                  </textarea>
+                                  <input
+                                        class="message-input"
+                                        type="text"
+                                        ng-model="textMessage"
+                                        ng-keypress="gdctrl.sendMessage($event)"
+                                        placeholder="What's on your mind..."
+                                        value="{{ textMessage }}"
+                                        >
                                   <button
                                         class="send-btn"
                                         data-ng-click="gdctrl.sendMessage($event)">
