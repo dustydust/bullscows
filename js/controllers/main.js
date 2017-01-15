@@ -98,8 +98,14 @@ bullsCows
             secret: ''
         }
 
+        this.checkOverlay = function(event) {
+            if (angular.element(event.target).hasClass('overlay-close'))
+                {
+                    this.showBlocks.gameHelp = false;
+                }
+        }
+
         this.showHelp = function(event) {
-            console.log('asd');
             if (this.showBlocks.gameHelp == false)
                 this.showBlocks.gameHelp = true;
             else
@@ -187,6 +193,13 @@ bullsCows
         //     });
         // }
         // Because better get all of quntities by one request from Game details
+
+        this.checkOverlay = function(event) {
+            if (angular.element(event.target).hasClass('overlay-close')) {
+                this.showBlocks.gameHelp = false;
+                this.showBlocks.gameMenu = false;
+            }
+        }
 
         this.showGameMenu = function(event) {
             if (this.showBlocks.gameMenu == false)
@@ -289,6 +302,11 @@ bullsCows
                     });
                     $scope.textMessage = '';
                     $scope.gdResultGameStatus = getGameStatusbyidService.getGame( { gameid: $scope.gameid } );
+                }
+                else
+                {
+                    $scope.gdResultGuesses.guesses.push({ word: 'Wrong length!' });
+                    $('.mbl-messages').mCustomScrollbar('scrollTo',$(document).find('#process-game-window').height());
                 }
             }
         }

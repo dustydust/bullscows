@@ -2,14 +2,20 @@
 
   <section
           id="game-menu"
+          data-ng-click="gdctrl.checkOverlay($event)"
           data-ng-include src="'template/game-menu.html'" 
-          data-ng-class="{ 'toggled': gdctrl.showBlocks.gameMenu === true }">
+          data-ng-class="{ 'toggled': gdctrl.showBlocks.gameMenu === true }"
+          class="overlay-close"
+          >
   </section>
 
   <section
           id="game-help"
+          data-ng-click="gdctrl.checkOverlay($event)"
           data-ng-include src="'template/game-help.html'" 
-          data-ng-class="{ 'toggled': gdctrl.showBlocks.gameHelp === true }">
+          data-ng-class="{ 'toggled': gdctrl.showBlocks.gameHelp === true }"
+          class="overlay-close"
+          >
   </section>
 
   <section id="content" class="page-view">
