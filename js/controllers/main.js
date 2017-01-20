@@ -90,9 +90,9 @@ bullsCows
             difficulty: {
                 selected: { val: 'easy'}, // by default
                 list: [
-                    { val: 'easy' },
-                    { val: 'normal' },
-                    { val: 'hard' }
+                    { val: 'easy',      text: 'easy' },
+                    { val: 'medium',    text: 'normal' },
+                    { val: 'hard',      text: 'hard' }
                 ]
             },
             secret: ''
